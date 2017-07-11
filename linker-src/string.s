@@ -33,7 +33,7 @@ strlen:
 	addiu $t0 $a0 0				# take address of first char
 strlen_loop:
 	lb $t1 0($t0)				# load byte from the addr of first char
-	beq $t1 $zero strlen_exit
+	beq $t1 $0 strlen_exit
 	addiu $v0 $v0 1
 	addiu $t0 $t0 1
 	j strlen_loop
@@ -57,14 +57,14 @@ strncpy_start:
 	beq $t0 $a2 strncpy_exit
 	addu $t1 $a1 $t0		# dont need to change to word aligned since char is one byte
 	lb	$t2	0($t1)
-	beq $t2 $zero strncpy_exit	# exit when reach null terminator
+	beq $t2 $0 strncpy_exit	# exit when reach null terminator
 	addu $t3, $a0, $t0		# the addr where we will save the selected char
 	sb	$t2 0($t3)
 	addiu $t1 $t1 1
 	j strncpy_start
-stancpy_exit:			# add an null terminator into the dest
+strncpy_exit:			# add an null terminator into the dest
 	addu $t1 $a0 $t0
-	sb $zero 0($t1)
+	sb $0 0($t1)
 	addiu $v0 $a0 0
 	jr $ra
 
@@ -82,6 +82,35 @@ stancpy_exit:			# add an null terminator into the dest
 #------------------------------------------------------------------------------
 copy_of_str:
 	# YOUR CODE HERE
+	addiu $sp $sp -16
+	sw $s2 12($sp)
+	sw $s1 8($sp)
+	sw $s0 4($sp)
+	sw $ra 0($sp)
+	
+	addu $s0 $a0 $0   # save the address into s0
+	jal strlen
+	addu $s1 $v0 $0  #s1 hold the value of string length
+	
+	addiu $t0 $s1 1		# add a null terminator to the end
+	addu $a0 $t0 $0
+	li $v0 9			# address allocated is now in v0
+	syscall
+	addu $s2 $v0 $0    # s2 save the address of the new string
+	
+	addu $a0 $s2 $0		# prepare for strncpy a0 holds the destination
+	addu $a1 $s0 $0		# a1 holds the souce string
+	addu $a2 $s1 $0
+	jal strncpy        # I think we don't need to add a terminator agian here
+	
+	addu $v0 $s2 $0
+	
+	lw $s2, 12($sp)
+	lw $s1, 8($sp)
+	lw $s0, 4($sp)
+	lw $ra, 0($sp)
+	addiu $sp, $sp, 16
+	
 	
 	jr $ra
 
