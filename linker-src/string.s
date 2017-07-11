@@ -28,6 +28,16 @@ tab:	.asciiz "\t"
 #------------------------------------------------------------------------------
 strlen:
 	# YOUR CODE HERE
+	beq $a0 $zero strlen_exit		#if a0 is an empty string return
+	li $v0 0					# set return value to 0
+	addiu $t0 $a0 0				# take address of first char
+strlen_loop:
+	lb $t1 0($t0)				# load byte from the addr of first char
+	beq $t1 $zero strlen_exit
+	addiu $v0 $v0 1
+	addiu $t0 $t0 1
+	j strlen_loop
+strlen_exit:
 	jr $ra
 
 #------------------------------------------------------------------------------
