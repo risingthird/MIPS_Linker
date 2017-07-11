@@ -52,6 +52,20 @@ strlen_exit:
 #------------------------------------------------------------------------------
 strncpy:
 	# YOUR CODE HERE
+	addiu $t0 $t0 0			# use t0 as a counter
+strncpy_start:
+	beq $t0 $a2 strncpy_exit
+	addu $t1 $a1 $t0		# dont need to change to word aligned since char is one byte
+	lb	$t2	0($t1)
+	beq $t2 $zero strncpy_exit	# exit when reach null terminator
+	addu $t3, $a0, $t0		# the addr where we will save the selected char
+	sb	$t2 0($t3)
+	addiu $t1 $t1 1
+	j strncpy_start
+stancpy_exit:			# add an null terminator into the dest
+	addu $t1 $a0 $t0
+	sb $zero 0($t1)
+	addiu $v0 $a0 0
 	jr $ra
 
 #------------------------------------------------------------------------------
@@ -68,6 +82,7 @@ strncpy:
 #------------------------------------------------------------------------------
 copy_of_str:
 	# YOUR CODE HERE
+	
 	jr $ra
 
 ###############################################################################
