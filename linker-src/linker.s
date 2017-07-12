@@ -49,6 +49,8 @@ write_machine_code:
 	# You may need to save additional items onto the stack. Feel free to
 	# change this part.
 	addiu $sp, $sp, -24
+	sw $s5, 28($sp)
+	sw $s6, 24($sp)
 	sw $s0, 20($sp)
 	sw $s1, 16($sp)
 	sw $s2, 12($sp)
@@ -77,9 +79,12 @@ write_machine_code_find_text:
 	# 1. Initialize the byte offset to zero. We will need this for any instructions
 	# that require relocation:
 	# YOUR_INSTRUCTIONS_HERE
+	li $s6, 0                # $s6 = offset
 
 write_machine_code_next_inst:
 	# 2. Call readline() while passing in the correct arguments:
+	move $a0, $s1
+	jal readline
 	# YOUR_INSTRUCTIONS_HERE
 
 	# Check whether readline() returned an error.
@@ -92,25 +97,43 @@ write_machine_code_next_inst:
 	
 	# 3. Looks like there is another instruction. Call parse_int() with base=16
 	# to convert the instruction into a number, and store it into a register:
+	move $a0, $v1
+	li   $a1, 16
+	jal  parse_int
+	move $s5, $v0             # $s5 = return of parse_int()
 	# YOUR_INSTRUCTIONS_HERE
 	
 	# 4. Check if the instruction needs relocation. If it does not, branch to
 	# the label write_machine_code_to_file:
+	move $a0, $s5
+	jal inst_needs_relocation
+	beq $v0, $0, write_machine_code_to_file
 	# YOUR_INSTRUCTIONS_HERE
 	
 	# 5. Here we handle relocation. Call relocate_inst() with the appropriate
 	# arguments, and store the relocated instruction in the appropriate register:
+	move $a0, $s5
+	move $a1, $s6
+	move $a2, $s2
+	move $a3, $s3
+	jal relocate_inst
+	beq $v0, $0, write_machine_code_error
+	move $a0, $v0
+	
 	# YOUR_INSTRUCTIONS_HERE
 
 write_machine_code_to_file:
 	# 6. Write the instruction into a string buffer via hex_to_str():
+	la $a1, hex_buffer
+	jal hex_to_str
 	# YOUR_INSTRUCTIONS_HERE 
 	
 	# 7. Increment the byte offset by the appropriate amount:
+	addiu $s6, $s6, 4
 	# YOUR_INSTRUCTIONS_HERE
 
 	# Here, we use the write to file syscall. WE specify the output file as $a0.
-	move $a0, $s0
+	
 	# Set $a1 = the buffer that we will write.
 	la $a1, hex_buffer
 	# Set $a2 = number of bytes to write. 8 digits + newline = 9 bytes
