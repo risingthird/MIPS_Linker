@@ -46,9 +46,19 @@ relocLabel: .asciiz ".relocation"
 # Returns: 1 if the instruction needs relocation, 0 otherwise.
 #------------------------------------------------------------------------------
 inst_needs_relocation:
+	srl $t0, $a0, 26
+	beq $t0, $0,  false
+	li  $t1, 0x2           #j
+	beq $t0, $t1, true
+	li  $t1, 0x3           #jal
+	beq $t0, $t1, true
 	# YOUR CODE HERE
 	jr $ra
-	
+
+false: addiu $v0, $v0, 0
+	   jr $ra
+true:  addiu $v0, $v0, 1
+       jr $ra
 #------------------------------------------------------------------------------
 # function relocate_inst()
 #------------------------------------------------------------------------------
@@ -68,9 +78,42 @@ inst_needs_relocation:
 # Returns: the relocated instruction, or -1 if error
 #------------------------------------------------------------------------------
 relocate_inst:
+	addiu $sp, $sp, -16
+	sw $a0, 12($sp)
+	sw $a1, 8($sp)
+	sw $a2, 4($sp)
+	sw $ra, 0($sp)
+	
+	move $a0, $a3
+	jal symbol_for_addr         #if 0, then not exist
+	beq $v0, $0, error
+	move $t0, $v0
+	
+	move $a0, $a2
+	move $a1, $t0
+	jal addr_for_symbol         #if -1, then not exist
+	li   $t0, -1
+	beq  $v0, $t0, error
+	move $t0, $v0
+	
+	lw   $a0, 12($sp)
+	srl  $t1, $a0, 26
+	li   $t2, 0x2
+	beq  $t1, $t2, label_j
+	li   $t2, 0x3
+	beq  $t1, $t2, label_jal
+	
+	
 	# YOUR CODE HERE
-	jr $ra
 
+label_j:   move $v0, $a0
+           #help me
+
+label_jal：#help me
+error:     li $v0, -1
+
+end:        #help me
+		   jr $ra
 ###############################################################################
 #                 DO NOT MODIFY ANYTHING BELOW THIS POINT                       
 ###############################################################################	
