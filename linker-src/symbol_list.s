@@ -54,12 +54,27 @@ addr_for_symbol:
 	sw $a0 8($sp)
 	sw $s0 4($sp)
 	sw $ra 0($sp)
+	addu $s0 $a0 $0
+addr_loop:
+	beq $s0 $0 addr_not_found
+	lw $a0 4($s0)			# if take 0($s0) here, we will actually get the addr not the name
+	lw $a1 12($sp)
+	jal streq
+	beq $v0 $0 addr_found
+	lw $s0 8($s0)
+	j addr_loop
 addr_found:
 	li $v0 0($s0)
 	j addr_exit
 addr_not_found:
 	li $v0 -1
 addr_exit:
+	lw $a1 12($sp)
+	lw $a0 8($sp)
+	lw $s0 4($sp)
+	lw $ra 0($sp)
+	addiu $sp $sp 16
+	jr $ra
 ###############################################################################
 #                 DO NOT MODIFY ANYTHING BELOW THIS POINT                       
 ###############################################################################
