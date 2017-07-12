@@ -48,7 +48,7 @@ hex_buffer:		.space 10
 write_machine_code:
 	# You may need to save additional items onto the stack. Feel free to
 	# change this part.
-	addiu $sp, $sp, -24
+	addiu $sp, $sp, -32
 	sw $s5, 28($sp)
 	sw $s6, 24($sp)
 	sw $s0, 20($sp)
