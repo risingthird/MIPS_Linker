@@ -138,7 +138,7 @@ relocate_inst:
 label_i:   
 	move $v0, $a0
 	andi $v0, $v0, 0xffff0000	#clean up lower 16 bits
-	and  $v0, $v0, $t0
+	or  $v0, $v0, $t0
 	j	 end
            #help me
 
@@ -146,7 +146,7 @@ label_j:
 	move $v0, $a0
 	andi $v0, $v0, 0xfc000000   #clean up lower 26 bits
 	srl  $t0, $t0, 2
-	and  $v0, $v0, $t0
+	or  $v0, $v0, $t0
 	j	 end
 	#help me
 error:     
