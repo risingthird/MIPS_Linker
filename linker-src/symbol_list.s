@@ -64,7 +64,7 @@ addr_loop:
 	lw $s0 8($s0)
 	j addr_loop
 addr_found:
-	li $v0 0($s0)
+	lw $v0 0($s0)
 	j addr_exit
 addr_not_found:
 	li $v0 -1
