@@ -122,22 +122,25 @@ relocate_inst:
 	jal addr_for_symbol         #if -1, then not exist
 	li   $t0, -1
 	beq  $v0, $t0, error
-	move $t0, $v0
+	move $t0, $v0				#gets target address
 	
 	lw   $a0, 12($sp)
 	srl  $t1, $a0, 26
 	li   $t2, 0x2
 	beq  $t1, $t2, label_j
 	li   $t2, 0x3
-	beq  $t1, $t2, label_jal
+	beq  $t1, $t2, label_j
 	
 	
 	# YOUR CODE HERE
 
-label_j:   move $v0, $a0
+label_i:   
+	move $v0, $a0
+	andi $v0, $v0, 0xffff0000
+	and  $v0, $v0, $t0
            #help me
 
-label_jal：#help me
+label_j：#help me
 error:     li $v0, -1
 
 end:        #help me
