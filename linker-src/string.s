@@ -52,7 +52,7 @@ strlen_exit:
 #------------------------------------------------------------------------------
 strncpy:
 	# YOUR CODE HERE
-	addiu $t0 $t0 0			# use t0 as a counter
+	addiu $t0 $0 0			# use t0 as a counter
 strncpy_start:
 	beq $t0 $a2 strncpy_exit
 	addu $t1 $a1 $t0		# dont need to change to word aligned since char is one byte
