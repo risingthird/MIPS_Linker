@@ -53,12 +53,40 @@ inst_needs_relocation:
 	li  $t1, 0x3           #jal
 	beq $t0, $t1, true
 	# YOUR CODE HERE
-	jr $ra
+	li  $t1, 0x24		   #lbu
+	beq $t0, $t1, true
+	
+	li	$t1, 0x25		   #lhu
+	beq $t0, $t1, true
+	
+	li  $t1, 0x30		   #ll
+	beq $t0, $t1, true
+	
+	li  $t1, 0xf		   #lui
+	beq $t0, $t1, true
+	
+	li  $t1, 0x23		   #lw
+	beq $t0, $t1, true
+	
+	li  $t1, 0x28		   #sb
+	beq $t0, $t1, true
+	
+	li  $t1, 0x29		   #sh
+	beq $t0, $t1, true
+	
+	li  $t1, 0x2b		   #sw
+	beq $t0, $t1, true
+	
+	li $t1, 0x38		   #sc
+	beq $t0, $t1, true
+	
 
-false: addiu $v0, $v0, 0
-	   jr $ra
-true:  addiu $v0, $v0, 1
-       jr $ra
+false: 
+	addiu $v0, $v0, 0
+	jr $ra
+true:  
+	addiu $v0, $v0, 1
+    jr $ra
 #------------------------------------------------------------------------------
 # function relocate_inst()
 #------------------------------------------------------------------------------
