@@ -28,7 +28,7 @@ tab:	.asciiz "\t"
 #------------------------------------------------------------------------------
 strlen:
 	# YOUR CODE HERE
-	beq $a0 $zero strlen_exit		#if a0 is an empty string return
+	beq $a0 $0 strlen_exit		#if a0 is an empty string return
 	li $v0 0					# set return value to 0
 	addiu $t0 $a0 0				# take address of first char
 strlen_loop:
