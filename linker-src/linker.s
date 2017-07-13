@@ -117,7 +117,8 @@ write_machine_code_next_inst:
 	move $a2, $s2
 	move $a3, $s3
 	jal relocate_inst
-	blt $v0, $0, write_machine_code_error
+	li   $t5, -1
+	beq $v0, $t5, write_machine_code_error
 	move $a0, $v0
 	
 	# YOUR_INSTRUCTIONS_HERE
