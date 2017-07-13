@@ -60,7 +60,7 @@ strncpy_start:
 	beq $t2 $0 strncpy_exit	# exit when reach null terminator
 	addu $t3, $a0, $t0		# the addr where we will save the selected char
 	sb	$t2 0($t3)
-	addiu $t1 $t1 1
+	addiu $t0 $t0 1
 	j strncpy_start
 strncpy_exit:			# add an null terminator into the dest
 	addu $t1 $a0 $t0
