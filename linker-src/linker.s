@@ -149,13 +149,15 @@ write_machine_code_error:
 	li $v0, -1
 write_machine_code_end:
 	# Don't forget to change this part if you saved more items onto the stack!
+	lw $s5, 28($sp)
+	lw $s6, 24($sp)
 	lw $s0, 20($sp)
 	lw $s1, 16($sp)
 	lw $s2, 12($sp)
 	lw $s3, 8($sp)
 	lw $s4, 4($sp)
 	lw $ra, 0($sp)
-	addiu $sp, $sp, 24
+	addiu $sp, $sp, 32
 	jr $ra
 
 ###############################################################################
