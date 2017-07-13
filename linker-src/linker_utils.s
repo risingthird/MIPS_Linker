@@ -144,6 +144,7 @@ label_i:
 label_j：
 	move $v0, $a0
 	andi $v0, $v0, 0xfc000000   #clean up lower 26 bits
+	srl  $t0, $t0, 2
 	and  $v0, $v0, $t0
 	j	 end
 	#help me
