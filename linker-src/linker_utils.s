@@ -54,32 +54,32 @@ inst_needs_relocation:
 	li  $t1, 0x3           #jal
 	beq $t0, $t1, true
 	# YOUR CODE HERE
-	li  $t1, 0x24		   #lbu
-	beq $t0, $t1, true
+	#li  $t1, 0x24		   #lbu
+	#beq $t0, $t1, true
 	
-	li	$t1, 0x25		   #lhu
-	beq $t0, $t1, true
+	#li	$t1, 0x25		   #lhu
+	#beq $t0, $t1, true
 	
-	li  $t1, 0x30		   #ll
-	beq $t0, $t1, true
+	#li  $t1, 0x30		   #ll
+	#beq $t0, $t1, true
 	
-	li  $t1, 0xf		   #lui
-	beq $t0, $t1, true
+	#li  $t1, 0xf		   #lui
+	#beq $t0, $t1, true
 	
-	li  $t1, 0x23		   #lw
-	beq $t0, $t1, true
+	#li  $t1, 0x23		   #lw
+	#beq $t0, $t1, true
 	
-	li  $t1, 0x28		   #sb
-	beq $t0, $t1, true
+	#li  $t1, 0x28		   #sb
+	#beq $t0, $t1, true
 	
-	li  $t1, 0x29		   #sh
-	beq $t0, $t1, true
+	#li  $t1, 0x29		   #sh
+	#beq $t0, $t1, true
 	
-	li  $t1, 0x2b		   #sw
-	beq $t0, $t1, true
+	#li  $t1, 0x2b		   #sw
+	#beq $t0, $t1, true
 	
-	li $t1, 0x38		   #sc
-	beq $t0, $t1, true
+	#li $t1, 0x38		   #sc
+	#beq $t0, $t1, true
 	
 
 false: 
@@ -146,7 +146,7 @@ label_j:
 	move $v0, $a0
 	andi $v0, $v0, 0xfc000000   #clean up lower 26 bits
 	srl  $t0, $t0, 2
-	or  $v0, $v0, $t0
+	add  $v0, $v0, $t0
 	j	 end
 	#help me
 error:     
