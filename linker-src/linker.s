@@ -125,6 +125,7 @@ write_machine_code_next_inst:
 
 write_machine_code_to_file:
 	# 6. Write the instruction into a string buffer via hex_to_str():
+	move $a0, $s6
 	la $a1, hex_buffer
 	jal hex_to_str
 	# YOUR_INSTRUCTIONS_HERE 
