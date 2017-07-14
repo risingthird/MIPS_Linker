@@ -135,7 +135,7 @@ write_machine_code_to_file:
 	# YOUR_INSTRUCTIONS_HERE
 
 	# Here, we use the write to file syscall. WE specify the output file as $a0.
-	
+	move $a0 $s0
 	# Set $a1 = the buffer that we will write.
 	la $a1, hex_buffer
 	# Set $a2 = number of bytes to write. 8 digits + newline = 9 bytes
