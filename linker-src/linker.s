@@ -150,8 +150,8 @@ write_machine_code_error:
 	li $v0, -1
 write_machine_code_end:
 	# Don't forget to change this part if you saved more items onto the stack!
-	lw $s5, 28($sp)
-	lw $s6, 24($sp)
+	lw $s6, 28($sp)
+	lw $s5, 24($sp)
 	lw $s0, 20($sp)
 	lw $s1, 16($sp)
 	lw $s2, 12($sp)
