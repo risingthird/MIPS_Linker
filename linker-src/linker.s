@@ -107,6 +107,7 @@ write_machine_code_next_inst:
 	# the label write_machine_code_to_file:
 	move $a0, $s6
 	jal inst_needs_relocation
+	move $a0, $s6
 	beq $v0, $0, write_machine_code_to_file
 	# YOUR_INSTRUCTIONS_HERE
 	
@@ -118,8 +119,8 @@ write_machine_code_next_inst:
 	move $a3, $s3
 	jal relocate_inst
 	li   $t5, -1
-	beq $v0, $t5, write_machine_code_error
-	move $a0, $v0
+	addiu $s6, $v0, 0
+	beq $s6, $t5, write_machine_code_error
 	
 	# YOUR_INSTRUCTIONS_HERE
 
