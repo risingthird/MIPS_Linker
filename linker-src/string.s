@@ -103,6 +103,7 @@ copy_of_str:
 	addu $a2 $s1 $0
 	jal strncpy        # I think we don't need to add a terminator agian here
 	
+	
 	addu $v0 $s2 $0
 	
 	lw $s2, 12($sp)
